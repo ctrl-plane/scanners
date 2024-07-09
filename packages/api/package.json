@@ -8,9 +8,8 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "pnpm generate && tsc",
     "clean": "rm -rf dist",
-    "dev": "tsc -w",
     "lint": "eslint \"src/**/*.ts*\" --max-warnings 0",
     "test": "jest",
     "generate": "openapi-generator-cli generate"

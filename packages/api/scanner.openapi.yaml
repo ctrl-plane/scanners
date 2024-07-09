@@ -1,0 +1,59 @@
+openapi: 3.1.0
+info:
+  title: Deployment Targets API
+  version: 1.0.0
+paths:
+  /v1/{workspace}/deployment-targets/name/{name}:
+    patch:
+      summary: Update Kubernetes deployment target by name
+      operationId: updateDeploymentTargetByName
+      parameters:
+        - name: workspace
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Name of the workspace
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Name of the deployment target
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                version:
+                  type: string
+                kind:
+                  type: string
+                provider:
+                  type: string
+                config:
+                  type: object
+                labels:
+                  type: object
+                  additionalProperties:
+                    type: string
+              required:
+                - name
+                - version
+                - kind
+                - provider
+                - config
+                - labels
+      responses:
+        "200":
+          description: Successfully updated the deployment target
+        "400":
+          description: Invalid request
+        "404":
+          description: Deployment target not found
+        "500":
+          description: Internal server error

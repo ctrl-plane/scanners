@@ -81,6 +81,9 @@ importers:
       '@google-cloud/container':
         specifier: ^5.15.0
         version: 5.15.0
+      '@repo/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@repo/logger':
         specifier: workspace:*
         version: link:../../packages/logger

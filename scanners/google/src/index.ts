@@ -3,6 +3,7 @@ import { CronJob } from "cron";
 import { env } from "./config.js";
 import { SemVer } from "semver";
 import handlebars from "handlebars";
+import { api } from "./api.js";
 
 const clusterClient = new Container.v1.ClusterManagerClient();
 
@@ -18,6 +19,20 @@ const deploymentTargetName = (
   cluster: Container.protos.google.container.v1.ICluster
 ) => template({ cluster, projectId: env.GOOGLE_PROJECT_ID });
 
+function omitNullUndefined(obj: object) {
+  // Use Object.entries to get key-value pairs, then filter and reduce
+  return Object.entries(obj).reduce(
+    (acc, [key, value]) => {
+      // Add the key-value pair to the accumulator if the value is neither null nor undefined
+      if (value !== null && value !== undefined) {
+        acc[key] = value;
+      }
+      return acc;
+    },
+    {} as Record<string, string>
+  );
+}
+
 const scan = async () => {
   const clusters = (await getClusters()) ?? [];
 
@@ -32,6 +47,7 @@ const scan = async () => {
       );
 
       const appUrl = `https://console.cloud.google.com/kubernetes/clusters/details/${cluster.location}/${cluster.name}/details?project=${env.GOOGLE_PROJECT_ID}`;
+      const name = deploymentTargetName(cluster);
       const deploymentTarget = {
         name: deploymentTargetName(cluster),
         version: "kubernetes/v1",
@@ -71,6 +87,14 @@ const scan = async () => {
           ...(cluster.resourceLabels ?? {}),
         },
       };
+      api.updateDeploymentTargetByName({
+        name,
+        workspace: env.CTRLPLANE_WORKSPACE,
+        updateDeploymentTargetByNameRequest: {
+          ...deploymentTarget,
+          labels: omitNullUndefined(deploymentTarget.labels),
+        },
+      });
     })
   );
 };

@@ -6,7 +6,7 @@ dotenv.config();
 
 export const env = createEnv({
   server: {
-    CTRLPLANE_API: z.string().default("http://localhost:3000"),
+    CTRLPLANE_API_URL: z.string().default("http://localhost:3000"),
     CTRLPLANE_API_KEY: z.string().default(""),
     CTRLPLANE_WORKSPACE: z.string().default("default"),
     CTRLPLANE_SCANNER_NAME: z.string().default("google"),
