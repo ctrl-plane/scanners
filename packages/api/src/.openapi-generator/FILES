@@ -1,6 +1,7 @@
 apis/DefaultApi.ts
 apis/index.ts
 index.ts
-models/UpdateDeploymentTargetByNameRequest.ts
+models/GetScannerByName200Response.ts
+models/SetScannersDeploymentTargetRequestInner.ts
 models/index.ts
 runtime.ts

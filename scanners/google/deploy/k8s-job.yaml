@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: google-scanner
+spec:
+  schedule: "* * * * *" # This schedule runs the job every minute
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: google-scanner
+              image: ctrlplane/google-scanner:latest
+              env:
+                - name: CTRLPLANE_WORKSPACE
+                  value: ""
+                - name: CTRLPLANE_APIKEY
+                  value: ""
+                - name: GOOGLE_PROJECT_ID
+                  value: ""
+                - name: CRON_ENABLED
+                  value: "false"
+          restartPolicy: Never
+      backoffLimit: 4

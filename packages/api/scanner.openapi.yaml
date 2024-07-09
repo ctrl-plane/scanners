@@ -3,10 +3,10 @@ info:
   title: Deployment Targets API
   version: 1.0.0
 paths:
-  /v1/{workspace}/deployment-targets/name/{name}:
-    patch:
-      summary: Update Kubernetes deployment target by name
-      operationId: updateDeploymentTargetByName
+  /v1/{workspace}/scanners/name/${name}:
+    get:
+      summary: Get a scanner by name
+      operationId: getScannerByName
       parameters:
         - name: workspace
           in: path
@@ -19,35 +19,68 @@ paths:
           required: true
           schema:
             type: string
-          description: Name of the deployment target
+          description: Name of the scanner
+      responses:
+        "200":
+          description: Successfully retrieved the scanner
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+        "404":
+          description: Scanner not found
+        "500":
+          description: Internal server error
+  /v1/{workspace}/scanners/{scannerId}/deployment-targets/set:
+    patch:
+      summary: Sets the deployment target for a scanner
+      operationId: setScannersDeploymentTarget
+      parameters:
+        - name: workspace
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Name of the workspace
+        - name: scannerId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: UUID of the scanner
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                version:
-                  type: string
-                kind:
-                  type: string
-                provider:
-                  type: string
-                config:
-                  type: object
-                labels:
-                  type: object
-                  additionalProperties:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
                     type: string
-              required:
-                - name
-                - version
-                - kind
-                - provider
-                - config
-                - labels
+                  version:
+                    type: string
+                  kind:
+                    type: string
+                  provider:
+                    type: string
+                  config:
+                    type: object
+                  labels:
+                    type: object
+                    additionalProperties:
+                      type: string
+                required:
+                  - name
+                  - version
+                  - kind
+                  - provider
+                  - config
+                  - labels
       responses:
         "200":
           description: Successfully updated the deployment target

@@ -1,3 +1,4 @@
 /* tslint:disable */
 /* eslint-disable */
-export * from './UpdateDeploymentTargetByNameRequest';
+export * from './GetScannerByName200Response';
+export * from './SetScannersDeploymentTargetRequestInner';

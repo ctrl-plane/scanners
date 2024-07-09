@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  google:
+    image: ctrlplane/google-scanner:latest
+    container_name: google-scanner
+    environment:
+      - CTRLPLANE_WORKSPACE=
+      - CTRLPLANE_APIKEY=
+      - GOOGLE_PROJECT_ID=

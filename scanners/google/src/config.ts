@@ -7,9 +7,9 @@ dotenv.config();
 export const env = createEnv({
   server: {
     CTRLPLANE_API_URL: z.string().default("http://localhost:3000"),
-    CTRLPLANE_API_KEY: z.string().default(""),
+    CTRLPLANE_API_KEY: z.string(),
     CTRLPLANE_WORKSPACE: z.string().default("default"),
-    CTRLPLANE_SCANNER_NAME: z.string().default("google"),
+    CTRLPLANE_SCANNER_NAME: z.string().default("offical-google-scanner"),
     CTRLPLANE_TARGET_NAME: z
       .string()
       .default("gke-{{ project }}-{{ cluster.name }}"),

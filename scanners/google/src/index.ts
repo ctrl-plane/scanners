@@ -4,6 +4,7 @@ import { env } from "./config.js";
 import { SemVer } from "semver";
 import handlebars from "handlebars";
 import { api } from "./api.js";
+import { logger } from "@repo/logger";
 
 const clusterClient = new Container.v1.ClusterManagerClient();
 
@@ -20,13 +21,9 @@ const deploymentTargetName = (
 ) => template({ cluster, projectId: env.GOOGLE_PROJECT_ID });
 
 function omitNullUndefined(obj: object) {
-  // Use Object.entries to get key-value pairs, then filter and reduce
   return Object.entries(obj).reduce(
     (acc, [key, value]) => {
-      // Add the key-value pair to the accumulator if the value is neither null nor undefined
-      if (value !== null && value !== undefined) {
-        acc[key] = value;
-      }
+      if (value !== null && value !== undefined) acc[key] = value;
       return acc;
     },
     {} as Record<string, string>
@@ -34,75 +31,85 @@ function omitNullUndefined(obj: object) {
 }
 
 const scan = async () => {
+  const { id } = await api.getScannerByName({
+    workspace: env.CTRLPLANE_WORKSPACE,
+    name: env.CTRLPLANE_SCANNER_NAME,
+  });
+
+  if (id == null) {
+    logger.error("Scanner not found", {
+      workspace: env.CTRLPLANE_WORKSPACE,
+      name: env.CTRLPLANE_SCANNER_NAME,
+    });
+    return;
+  }
+
+  logger.info("Scanner ID", { id });
+
+  logger.info("Scanning Google Cloud GKE clusters");
   const clusters = (await getClusters()) ?? [];
 
-  await Promise.allSettled(
-    clusters.map(async (cluster) => {
-      console.log(`Found cluster ${cluster.name}`);
+  logger.info(`Found ${clusters.length} clusters`, { count: clusters.length });
 
-      const masterVersion = new SemVer(cluster.currentMasterVersion ?? "0");
-      const nodeVersion = new SemVer(cluster.currentNodeVersion ?? "0");
-      const autoscaling = String(
-        cluster.autoscaling?.enableNodeAutoprovisioning ?? false
-      );
+  const deploymentTargets = clusters.map((cluster) => {
+    const masterVersion = new SemVer(cluster.currentMasterVersion ?? "0");
+    const nodeVersion = new SemVer(cluster.currentNodeVersion ?? "0");
+    const autoscaling = String(
+      cluster.autoscaling?.enableNodeAutoprovisioning ?? false
+    );
 
-      const appUrl = `https://console.cloud.google.com/kubernetes/clusters/details/${cluster.location}/${cluster.name}/details?project=${env.GOOGLE_PROJECT_ID}`;
-      const name = deploymentTargetName(cluster);
-      const deploymentTarget = {
-        name: deploymentTargetName(cluster),
-        version: "kubernetes/v1",
-        kind: "KubernetesAPI",
-        provider: "GoogleCloud",
-        config: {
-          name: cluster.name,
-          status: cluster.status,
-          cluster: {
-            certificateAuthorityData: cluster.masterAuth?.clusterCaCertificate,
-            endpoint: `https://${cluster.endpoint}`,
-          },
+    const appUrl = `https://console.cloud.google.com/kubernetes/clusters/details/${cluster.location}/${cluster.name}/details?project=${env.GOOGLE_PROJECT_ID}`;
+    return {
+      name: deploymentTargetName(cluster),
+      version: "kubernetes/v1",
+      kind: "KubernetesAPI",
+      provider: "GoogleCloud",
+      config: {
+        name: cluster.name,
+        status: cluster.status,
+        cluster: {
+          certificateAuthorityData: cluster.masterAuth?.clusterCaCertificate,
+          endpoint: `https://${cluster.endpoint}`,
         },
-        labels: {
-          "ctrlplane/url": appUrl,
+      },
+      labels: omitNullUndefined({
+        "ctrlplane/url": appUrl,
 
-          "google/self-link": cluster.selfLink,
-          "google/project-id": env.GOOGLE_PROJECT_ID,
-          "google/gke-location": cluster.location,
+        "google/self-link": cluster.selfLink,
+        "google/project-id": env.GOOGLE_PROJECT_ID,
+        "google/gke-location": cluster.location,
 
-          "kubernetes.io/distribution": "gke",
-          "kubernetes.io/status": cluster.status,
-          "kubernetes.io/node-count": String(cluster.currentNodeCount ?? 0),
+        "kubernetes.io/distribution": "gke",
+        "kubernetes.io/status": cluster.status,
+        "kubernetes.io/node-count": String(cluster.currentNodeCount ?? 0),
 
-          "kubernetes/master-version": masterVersion.version,
-          "kubernetes/master-version-major": String(masterVersion.major),
-          "kubernetes/master-version-minor": String(masterVersion.minor),
-          "kubernetes/master-version-patch": String(masterVersion.patch),
+        "kubernetes/master-version": masterVersion.version,
+        "kubernetes/master-version-major": String(masterVersion.major),
+        "kubernetes/master-version-minor": String(masterVersion.minor),
+        "kubernetes/master-version-patch": String(masterVersion.patch),
 
-          "kubernetes/node-version": nodeVersion.version,
-          "kubernetes/node-version-major": String(nodeVersion.major),
-          "kubernetes/node-version-minor": String(nodeVersion.minor),
-          "kubernetes/node-version-patch": String(nodeVersion.patch),
+        "kubernetes/node-version": nodeVersion.version,
+        "kubernetes/node-version-major": String(nodeVersion.major),
+        "kubernetes/node-version-minor": String(nodeVersion.minor),
+        "kubernetes/node-version-patch": String(nodeVersion.patch),
 
-          "kubernetes.io/autoscaling-enabled": autoscaling,
+        "kubernetes.io/autoscaling-enabled": autoscaling,
 
-          ...(cluster.resourceLabels ?? {}),
-        },
-      };
-      api.updateDeploymentTargetByName({
-        name,
-        workspace: env.CTRLPLANE_WORKSPACE,
-        updateDeploymentTargetByNameRequest: {
-          ...deploymentTarget,
-          labels: omitNullUndefined(deploymentTarget.labels),
-        },
-      });
-    })
-  );
+        ...(cluster.resourceLabels ?? {}),
+      }),
+    };
+  });
+
+  logger.info("Sending deployment targets to CtrlPlane", {
+    count: deploymentTargets.length,
+  });
+
+  await api.setScannersDeploymentTarget({
+    workspace: env.CTRLPLANE_WORKSPACE,
+    scannerId: id,
+    setScannersDeploymentTargetRequestInner: deploymentTargets,
+  });
 };
 
-const scanGke = new CronJob(
-  "* * * * *", // min
-  scan
-);
-
 scan().catch(console.error);
-scanGke.start();
+if (env.CRON_ENABLED) new CronJob(env.CRON_TIME, scan).start();

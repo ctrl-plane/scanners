@@ -15,17 +15,25 @@
 
 import * as runtime from '../runtime';
 import type {
-  UpdateDeploymentTargetByNameRequest,
+  GetScannerByName200Response,
+  SetScannersDeploymentTargetRequestInner,
 } from '../models/index';
 import {
-    UpdateDeploymentTargetByNameRequestFromJSON,
-    UpdateDeploymentTargetByNameRequestToJSON,
+    GetScannerByName200ResponseFromJSON,
+    GetScannerByName200ResponseToJSON,
+    SetScannersDeploymentTargetRequestInnerFromJSON,
+    SetScannersDeploymentTargetRequestInnerToJSON,
 } from '../models/index';
 
-export interface UpdateDeploymentTargetByNameOperationRequest {
+export interface GetScannerByNameRequest {
     workspace: string;
     name: string;
-    updateDeploymentTargetByNameRequest: UpdateDeploymentTargetByNameRequest;
+}
+
+export interface SetScannersDeploymentTargetRequest {
+    workspace: string;
+    scannerId: string;
+    setScannersDeploymentTargetRequestInner: Array<SetScannersDeploymentTargetRequestInner>;
 }
 
 /**
@@ -34,27 +42,67 @@ export interface UpdateDeploymentTargetByNameOperationRequest {
 export class DefaultApi extends runtime.BaseAPI {
 
     /**
-     * Update Kubernetes deployment target by name
+     * Get a scanner by name
      */
-    async updateDeploymentTargetByNameRaw(requestParameters: UpdateDeploymentTargetByNameOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getScannerByNameRaw(requestParameters: GetScannerByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetScannerByName200Response>> {
         if (requestParameters['workspace'] == null) {
             throw new runtime.RequiredError(
                 'workspace',
-                'Required parameter "workspace" was null or undefined when calling updateDeploymentTargetByName().'
+                'Required parameter "workspace" was null or undefined when calling getScannerByName().'
             );
         }
 
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
-                'Required parameter "name" was null or undefined when calling updateDeploymentTargetByName().'
+                'Required parameter "name" was null or undefined when calling getScannerByName().'
             );
         }
 
-        if (requestParameters['updateDeploymentTargetByNameRequest'] == null) {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/{workspace}/scanners/name/${name}`.replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters['workspace']))).replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetScannerByName200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a scanner by name
+     */
+    async getScannerByName(requestParameters: GetScannerByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetScannerByName200Response> {
+        const response = await this.getScannerByNameRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Sets the deployment target for a scanner
+     */
+    async setScannersDeploymentTargetRaw(requestParameters: SetScannersDeploymentTargetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['workspace'] == null) {
             throw new runtime.RequiredError(
-                'updateDeploymentTargetByNameRequest',
-                'Required parameter "updateDeploymentTargetByNameRequest" was null or undefined when calling updateDeploymentTargetByName().'
+                'workspace',
+                'Required parameter "workspace" was null or undefined when calling setScannersDeploymentTarget().'
+            );
+        }
+
+        if (requestParameters['scannerId'] == null) {
+            throw new runtime.RequiredError(
+                'scannerId',
+                'Required parameter "scannerId" was null or undefined when calling setScannersDeploymentTarget().'
+            );
+        }
+
+        if (requestParameters['setScannersDeploymentTargetRequestInner'] == null) {
+            throw new runtime.RequiredError(
+                'setScannersDeploymentTargetRequestInner',
+                'Required parameter "setScannersDeploymentTargetRequestInner" was null or undefined when calling setScannersDeploymentTarget().'
             );
         }
 
@@ -65,21 +113,21 @@ export class DefaultApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/{workspace}/deployment-targets/name/{name}`.replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters['workspace']))).replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name']))),
+            path: `/v1/{workspace}/scanners/{scannerId}/deployment-targets/set`.replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters['workspace']))).replace(`{${"scannerId"}}`, encodeURIComponent(String(requestParameters['scannerId']))),
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
-            body: UpdateDeploymentTargetByNameRequestToJSON(requestParameters['updateDeploymentTargetByNameRequest']),
+            body: requestParameters['setScannersDeploymentTargetRequestInner']!.map(SetScannersDeploymentTargetRequestInnerToJSON),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * Update Kubernetes deployment target by name
+     * Sets the deployment target for a scanner
      */
-    async updateDeploymentTargetByName(requestParameters: UpdateDeploymentTargetByNameOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.updateDeploymentTargetByNameRaw(requestParameters, initOverrides);
+    async setScannersDeploymentTarget(requestParameters: SetScannersDeploymentTargetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.setScannersDeploymentTargetRaw(requestParameters, initOverrides);
     }
 
 }
