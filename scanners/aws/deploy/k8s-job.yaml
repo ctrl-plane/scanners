@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: aws-scanner
+spec:
+  schedule: "* * * * *" # This schedule runs the job every minute
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: aws-scanner
+              image: ctrlplane/google-scanner:latest
+              env:
+                - name: CTRLPLANE_WORKSPACE
+                  value: ""
+                - name: CTRLPLANE_APIKEY
+                  value: ""
+                - name: CRON_ENABLED
+                  value: "false"
+          restartPolicy: Never
+      backoffLimit: 4
