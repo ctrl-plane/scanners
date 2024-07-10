@@ -8,11 +8,14 @@ export const env = createEnv({
   server: {
     CTRLPLANE_API_URL: z.string().default("http://localhost:3000"),
     CTRLPLANE_API_KEY: z.string(),
-    CTRLPLANE_WORKSPACE: z.string().default("default"),
+    CTRLPLANE_WORKSPACE: z.string(),
     CTRLPLANE_SCANNER_NAME: z.string().default("offical-google-scanner"),
-    CTRLPLANE_TARGET_NAME: z
+    CTRLPLANE_GKE_TARGET_NAME: z
       .string()
       .default("gke-{{ project }}-{{ cluster.name }}"),
+    CTRLPLANE_COMPUTE_TARGET_NAME: z
+      .string()
+      .default("gc-{{ project }}-{{ cluster.name }}"),
 
     CRON_ENABLED: z.boolean().default(true),
     CRON_TIME: z.string().default("* * * * *"),

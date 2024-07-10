@@ -1,12 +1,12 @@
 openapi: 3.1.0
 info:
-  title: Deployment Targets API
+  title: Target Provider API
   version: 1.0.0
 paths:
   /v1/{workspace}/scanners/name/${name}:
     get:
-      summary: Get a scanner by name
-      operationId: getScannerByName
+      summary: Get a provider by name
+      operationId: getProviderByName
       parameters:
         - name: workspace
           in: path
@@ -34,10 +34,10 @@ paths:
           description: Scanner not found
         "500":
           description: Internal server error
-  /v1/{workspace}/scanners/{scannerId}/deployment-targets/set:
+  /v1/{workspace}/scanners/{providerId}/-targets/set:
     patch:
-      summary: Sets the deployment target for a scanner
-      operationId: setScannersDeploymentTarget
+      summary: Sets the target for a provider.
+      operationId: setProvidersTargets
       parameters:
         - name: workspace
           in: path
@@ -45,7 +45,7 @@ paths:
           schema:
             type: string
           description: Name of the workspace
-        - name: scannerId
+        - name: providerId
           in: path
           required: true
           schema:

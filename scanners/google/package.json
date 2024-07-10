@@ -15,6 +15,7 @@
     "preset": "@repo/jest-presets/node"
   },
   "dependencies": {
+    "@google-cloud/compute": "^4.7.0",
     "@google-cloud/container": "^5.15.0",
     "@repo/api": "workspace:*",
     "@repo/logger": "workspace:*",

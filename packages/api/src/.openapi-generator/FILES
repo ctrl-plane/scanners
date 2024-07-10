@@ -1,7 +1,7 @@
 apis/DefaultApi.ts
 apis/index.ts
 index.ts
-models/GetScannerByName200Response.ts
-models/SetScannersDeploymentTargetRequestInner.ts
+models/GetProviderByName200Response.ts
+models/SetProvidersTargetsRequestInner.ts
 models/index.ts
 runtime.ts

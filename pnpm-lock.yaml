@@ -85,6 +85,9 @@ importers:
 
   scanners/google:
     dependencies:
+      '@google-cloud/compute':
+        specifier: ^4.7.0
+        version: 4.7.0
       '@google-cloud/container':
         specifier: ^5.15.0
         version: 5.15.0
@@ -534,6 +537,10 @@ packages:
   '@eslint/js@8.57.0':
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@google-cloud/compute@4.7.0':
+    resolution: {integrity: sha512-1UExR08o2XXKdOV8FIK6kcrNb65KVAnv045huJQV6OBiJ+uxubBWm4XxbPaWcT3TvvKGyYSMHG1Qx9/IiwpI1w==}
+    engines: {node: '>=14.0.0'}
 
   '@google-cloud/container@5.15.0':
     resolution: {integrity: sha512-P6V7K3wSN6JBj6RqQwuJvaa3PkOf2II1Ly0NszL7PDyh1P2b7/gYBSM3tQ4uDl+paRIRmjVC5UXUD8Bw91atDg==}
@@ -3884,6 +3891,13 @@ snapshots:
       - supports-color
 
   '@eslint/js@8.57.0': {}
+
+  '@google-cloud/compute@4.7.0':
+    dependencies:
+      google-gax: 4.3.8
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
 
   '@google-cloud/container@5.15.0':
     dependencies:
