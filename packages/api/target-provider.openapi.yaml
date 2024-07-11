@@ -3,10 +3,10 @@ info:
   title: Target Provider API
   version: 1.0.0
 paths:
-  /v1/{workspace}/scanners/name/${name}:
-    get:
-      summary: Get a provider by name
-      operationId: getProviderByName
+  /v1/{workspace}/target-provider/name/${name}:
+    post:
+      summary: Upserts a target provider.
+      operationId: getTargetProviderByName
       parameters:
         - name: workspace
           in: path
@@ -30,14 +30,22 @@ paths:
                 properties:
                   id:
                     type: string
+                  name:
+                    type: string
+                  workspaceId:
+                    type: string
+                required:
+                  - id
+                  - name
+                  - workspaceId
         "404":
           description: Scanner not found
         "500":
           description: Internal server error
-  /v1/{workspace}/scanners/{providerId}/-targets/set:
+  /v1/{workspace}/target-provider/{providerId}/set:
     patch:
       summary: Sets the target for a provider.
-      operationId: setProvidersTargets
+      operationId: setTargetProvidersTargets
       parameters:
         - name: workspace
           in: path
@@ -56,31 +64,36 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  version:
-                    type: string
-                  kind:
-                    type: string
-                  provider:
-                    type: string
-                  config:
+              type: object
+              required:
+                - targets
+              properties:
+                targets:
+                  type: array
+                  items:
                     type: object
-                  labels:
-                    type: object
-                    additionalProperties:
-                      type: string
-                required:
-                  - name
-                  - version
-                  - kind
-                  - provider
-                  - config
-                  - labels
+                    properties:
+                      name:
+                        type: string
+                      version:
+                        type: string
+                      kind:
+                        type: string
+                      provider:
+                        type: string
+                      config:
+                        type: object
+                      labels:
+                        type: object
+                        additionalProperties:
+                          type: string
+                    required:
+                      - name
+                      - version
+                      - kind
+                      - provider
+                      - config
+                      - labels
       responses:
         "200":
           description: Successfully updated the deployment target

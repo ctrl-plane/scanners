@@ -15,25 +15,25 @@
 
 import * as runtime from '../runtime';
 import type {
-  GetProviderByName200Response,
-  SetProvidersTargetsRequestInner,
+  GetTargetProviderByName200Response,
+  SetTargetProvidersTargetsRequest,
 } from '../models/index';
 import {
-    GetProviderByName200ResponseFromJSON,
-    GetProviderByName200ResponseToJSON,
-    SetProvidersTargetsRequestInnerFromJSON,
-    SetProvidersTargetsRequestInnerToJSON,
+    GetTargetProviderByName200ResponseFromJSON,
+    GetTargetProviderByName200ResponseToJSON,
+    SetTargetProvidersTargetsRequestFromJSON,
+    SetTargetProvidersTargetsRequestToJSON,
 } from '../models/index';
 
-export interface GetProviderByNameRequest {
+export interface GetTargetProviderByNameRequest {
     workspace: string;
     name: string;
 }
 
-export interface SetProvidersTargetsRequest {
+export interface SetTargetProvidersTargetsOperationRequest {
     workspace: string;
-    scannerId: string;
-    setProvidersTargetsRequestInner: Array<SetProvidersTargetsRequestInner>;
+    providerId: string;
+    setTargetProvidersTargetsRequest: SetTargetProvidersTargetsRequest;
 }
 
 /**
@@ -42,20 +42,20 @@ export interface SetProvidersTargetsRequest {
 export class DefaultApi extends runtime.BaseAPI {
 
     /**
-     * Get a provider by name
+     * Upserts a target provider.
      */
-    async getProviderByNameRaw(requestParameters: GetProviderByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProviderByName200Response>> {
+    async getTargetProviderByNameRaw(requestParameters: GetTargetProviderByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetTargetProviderByName200Response>> {
         if (requestParameters['workspace'] == null) {
             throw new runtime.RequiredError(
                 'workspace',
-                'Required parameter "workspace" was null or undefined when calling getProviderByName().'
+                'Required parameter "workspace" was null or undefined when calling getTargetProviderByName().'
             );
         }
 
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
-                'Required parameter "name" was null or undefined when calling getProviderByName().'
+                'Required parameter "name" was null or undefined when calling getTargetProviderByName().'
             );
         }
 
@@ -64,45 +64,45 @@ export class DefaultApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/{workspace}/scanners/name/${name}`.replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters['workspace']))).replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name']))),
-            method: 'GET',
+            path: `/v1/{workspace}/target-provider/name/${name}`.replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters['workspace']))).replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name']))),
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetProviderByName200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetTargetProviderByName200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Get a provider by name
+     * Upserts a target provider.
      */
-    async getProviderByName(requestParameters: GetProviderByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetProviderByName200Response> {
-        const response = await this.getProviderByNameRaw(requestParameters, initOverrides);
+    async getTargetProviderByName(requestParameters: GetTargetProviderByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetTargetProviderByName200Response> {
+        const response = await this.getTargetProviderByNameRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Sets the target for a provider.
      */
-    async setProvidersTargetsRaw(requestParameters: SetProvidersTargetsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setTargetProvidersTargetsRaw(requestParameters: SetTargetProvidersTargetsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters['workspace'] == null) {
             throw new runtime.RequiredError(
                 'workspace',
-                'Required parameter "workspace" was null or undefined when calling setProvidersTargets().'
+                'Required parameter "workspace" was null or undefined when calling setTargetProvidersTargets().'
             );
         }
 
-        if (requestParameters['scannerId'] == null) {
+        if (requestParameters['providerId'] == null) {
             throw new runtime.RequiredError(
-                'scannerId',
-                'Required parameter "scannerId" was null or undefined when calling setProvidersTargets().'
+                'providerId',
+                'Required parameter "providerId" was null or undefined when calling setTargetProvidersTargets().'
             );
         }
 
-        if (requestParameters['setProvidersTargetsRequestInner'] == null) {
+        if (requestParameters['setTargetProvidersTargetsRequest'] == null) {
             throw new runtime.RequiredError(
-                'setProvidersTargetsRequestInner',
-                'Required parameter "setProvidersTargetsRequestInner" was null or undefined when calling setProvidersTargets().'
+                'setTargetProvidersTargetsRequest',
+                'Required parameter "setTargetProvidersTargetsRequest" was null or undefined when calling setTargetProvidersTargets().'
             );
         }
 
@@ -113,11 +113,11 @@ export class DefaultApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/{workspace}/scanners/{scannerId}/-targets/set`.replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters['workspace']))).replace(`{${"scannerId"}}`, encodeURIComponent(String(requestParameters['scannerId']))),
+            path: `/v1/{workspace}/target-provider/{providerId}/set`.replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters['workspace']))).replace(`{${"providerId"}}`, encodeURIComponent(String(requestParameters['providerId']))),
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['setProvidersTargetsRequestInner']!.map(SetProvidersTargetsRequestInnerToJSON),
+            body: SetTargetProvidersTargetsRequestToJSON(requestParameters['setTargetProvidersTargetsRequest']),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -126,8 +126,8 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Sets the target for a provider.
      */
-    async setProvidersTargets(requestParameters: SetProvidersTargetsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.setProvidersTargetsRaw(requestParameters, initOverrides);
+    async setTargetProvidersTargets(requestParameters: SetTargetProvidersTargetsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.setTargetProvidersTargetsRaw(requestParameters, initOverrides);
     }
 
 }

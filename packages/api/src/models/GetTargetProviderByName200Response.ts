@@ -16,44 +16,44 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface GetProviderByName200Response
+ * @interface GetTargetProviderByName200Response
  */
-export interface GetProviderByName200Response {
+export interface GetTargetProviderByName200Response {
     /**
      * 
      * @type {string}
-     * @memberof GetProviderByName200Response
+     * @memberof GetTargetProviderByName200Response
      */
     id: string;
     /**
      * 
      * @type {string}
-     * @memberof GetProviderByName200Response
+     * @memberof GetTargetProviderByName200Response
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof GetProviderByName200Response
+     * @memberof GetTargetProviderByName200Response
      */
     workspaceId: string;
 }
 
 /**
- * Check if a given object implements the GetProviderByName200Response interface.
+ * Check if a given object implements the GetTargetProviderByName200Response interface.
  */
-export function instanceOfGetProviderByName200Response(value: object): value is GetProviderByName200Response {
+export function instanceOfGetTargetProviderByName200Response(value: object): value is GetTargetProviderByName200Response {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('workspaceId' in value) || value['workspaceId'] === undefined) return false;
     return true;
 }
 
-export function GetProviderByName200ResponseFromJSON(json: any): GetProviderByName200Response {
-    return GetProviderByName200ResponseFromJSONTyped(json, false);
+export function GetTargetProviderByName200ResponseFromJSON(json: any): GetTargetProviderByName200Response {
+    return GetTargetProviderByName200ResponseFromJSONTyped(json, false);
 }
 
-export function GetProviderByName200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetProviderByName200Response {
+export function GetTargetProviderByName200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetTargetProviderByName200Response {
     if (json == null) {
         return json;
     }
@@ -65,7 +65,7 @@ export function GetProviderByName200ResponseFromJSONTyped(json: any, ignoreDiscr
     };
 }
 
-export function GetProviderByName200ResponseToJSON(value?: GetProviderByName200Response | null): any {
+export function GetTargetProviderByName200ResponseToJSON(value?: GetTargetProviderByName200Response | null): any {
     if (value == null) {
         return value;
     }

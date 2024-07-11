@@ -8,7 +8,7 @@
       "v1": {
         "generatorName": "typescript-fetch",
         "output": "#{cwd}/src",
-        "glob": "scanner.openapi.yaml"
+        "glob": "target-provider.openapi.yaml"
       }
     }
   }

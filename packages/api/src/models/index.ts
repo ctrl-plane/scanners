@@ -1,4 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-export * from './GetProviderByName200Response';
-export * from './SetProvidersTargetsRequestInner';
+export * from './GetTargetProviderByName200Response';
+export * from './SetTargetProvidersTargetsRequest';
+export * from './SetTargetProvidersTargetsRequestTargetsInner';

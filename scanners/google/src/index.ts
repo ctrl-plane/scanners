@@ -5,7 +5,7 @@ import { logger } from "@repo/logger";
 import { getClusterDeploymentTargets } from "./gke.js";
 
 const scan = async () => {
-  const { id } = await api.getProviderByName({
+  const { id } = await api.getTargetProviderByName({
     workspace: env.CTRLPLANE_WORKSPACE,
     name: env.CTRLPLANE_SCANNER_NAME,
   });
@@ -27,10 +27,10 @@ const scan = async () => {
     count: targets.length,
   });
 
-  await api.setProvidersTargets({
+  await api.setTargetProvidersTargets({
     workspace: env.CTRLPLANE_WORKSPACE,
-    scannerId: id,
-    setProvidersTargetsRequestInner: targets,
+    providerId: id,
+    setTargetProvidersTargetsRequest: { targets },
   });
 };
 
