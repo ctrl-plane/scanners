@@ -3,10 +3,10 @@ info:
   title: Target Provider API
   version: 1.0.0
 paths:
-  /v1/{workspace}/target-provider/name/${name}:
-    post:
+  /v1/{workspace}/target-provider/name/{name}:
+    get:
       summary: Upserts a target provider.
-      operationId: getTargetProviderByName
+      operationId: upsertTargetProvider
       parameters:
         - name: workspace
           in: path
@@ -19,10 +19,10 @@ paths:
           required: true
           schema:
             type: string
-          description: Name of the scanner
+          description: Name of the target provider
       responses:
         "200":
-          description: Successfully retrieved the scanner
+          description: Successfully retrieved or created the target provider
           content:
             application/json:
               schema:
@@ -39,7 +39,7 @@ paths:
                   - name
                   - workspaceId
         "404":
-          description: Scanner not found
+          description: Provider not found
         "500":
           description: Internal server error
   /v1/{workspace}/target-provider/{providerId}/set:

@@ -3,9 +3,10 @@ import { env } from "./config.js";
 import { api } from "./api.js";
 import { logger } from "@repo/logger";
 import { getClusterDeploymentTargets } from "./gke.js";
+import { getInstanceTargets } from "./compute.js";
 
 const scan = async () => {
-  const { id } = await api.getTargetProviderByName({
+  const { id } = await api.upsertTargetProvider({
     workspace: env.CTRLPLANE_WORKSPACE,
     name: env.CTRLPLANE_SCANNER_NAME,
   });
@@ -18,12 +19,12 @@ const scan = async () => {
     return;
   }
 
-  logger.info("Scanner ID", { id });
+  logger.info(`Scanner ID: ${id}`, { id });
 
   const clusterTargets = await getClusterDeploymentTargets();
-  const computeTargets = await getClusterDeploymentTargets();
+  const computeTargets = await getInstanceTargets();
   const targets = [...clusterTargets, ...computeTargets];
-  logger.info("Sendingtargets to CtrlPlane", {
+  logger.info(`Sending ${targets.length} target(s) to CtrlPlane`, {
     count: targets.length,
   });
 

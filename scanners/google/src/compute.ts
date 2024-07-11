@@ -58,8 +58,9 @@ export const getInstanceTargets: ScannerFunc = async () => {
 
         "google-compute/cpu-platform": instance.cpuPlatform,
         "google-compute/macheine-type": instance.status,
-        "google-compute/network-interfaces":
-          instance.networkInterfaces?.length ?? 0,
+        "google-compute/network-interfaces": String(
+          instance.networkInterfaces?.length ?? 0
+        ),
 
         ...(instance.labels ?? {}),
       }),

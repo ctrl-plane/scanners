@@ -12,10 +12,10 @@ export const env = createEnv({
     CTRLPLANE_SCANNER_NAME: z.string().default("offical-google-scanner"),
     CTRLPLANE_GKE_TARGET_NAME: z
       .string()
-      .default("gke-{{ project }}-{{ cluster.name }}"),
+      .default("gke-{{ projectId }}-{{ cluster.name }}"),
     CTRLPLANE_COMPUTE_TARGET_NAME: z
       .string()
-      .default("gc-{{ project }}-{{ cluster.name }}"),
+      .default("gc-{{ projectId }}-{{ vm.name }}"),
 
     CRON_ENABLED: z.boolean().default(true),
     CRON_TIME: z.string().default("* * * * *"),

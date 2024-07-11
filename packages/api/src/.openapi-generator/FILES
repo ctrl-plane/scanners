@@ -1,8 +1,8 @@
 apis/DefaultApi.ts
 apis/index.ts
 index.ts
-models/GetTargetProviderByName200Response.ts
 models/SetTargetProvidersTargetsRequest.ts
 models/SetTargetProvidersTargetsRequestTargetsInner.ts
+models/UpsertTargetProvider200Response.ts
 models/index.ts
 runtime.ts

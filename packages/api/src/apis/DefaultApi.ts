@@ -15,20 +15,15 @@
 
 import * as runtime from '../runtime';
 import type {
-  GetTargetProviderByName200Response,
   SetTargetProvidersTargetsRequest,
+  UpsertTargetProvider200Response,
 } from '../models/index';
 import {
-    GetTargetProviderByName200ResponseFromJSON,
-    GetTargetProviderByName200ResponseToJSON,
     SetTargetProvidersTargetsRequestFromJSON,
     SetTargetProvidersTargetsRequestToJSON,
+    UpsertTargetProvider200ResponseFromJSON,
+    UpsertTargetProvider200ResponseToJSON,
 } from '../models/index';
-
-export interface GetTargetProviderByNameRequest {
-    workspace: string;
-    name: string;
-}
 
 export interface SetTargetProvidersTargetsOperationRequest {
     workspace: string;
@@ -36,50 +31,15 @@ export interface SetTargetProvidersTargetsOperationRequest {
     setTargetProvidersTargetsRequest: SetTargetProvidersTargetsRequest;
 }
 
+export interface UpsertTargetProviderRequest {
+    workspace: string;
+    name: string;
+}
+
 /**
  * 
  */
 export class DefaultApi extends runtime.BaseAPI {
-
-    /**
-     * Upserts a target provider.
-     */
-    async getTargetProviderByNameRaw(requestParameters: GetTargetProviderByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetTargetProviderByName200Response>> {
-        if (requestParameters['workspace'] == null) {
-            throw new runtime.RequiredError(
-                'workspace',
-                'Required parameter "workspace" was null or undefined when calling getTargetProviderByName().'
-            );
-        }
-
-        if (requestParameters['name'] == null) {
-            throw new runtime.RequiredError(
-                'name',
-                'Required parameter "name" was null or undefined when calling getTargetProviderByName().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/{workspace}/target-provider/name/${name}`.replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters['workspace']))).replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetTargetProviderByName200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Upserts a target provider.
-     */
-    async getTargetProviderByName(requestParameters: GetTargetProviderByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetTargetProviderByName200Response> {
-        const response = await this.getTargetProviderByNameRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
 
     /**
      * Sets the target for a provider.
@@ -128,6 +88,46 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async setTargetProvidersTargets(requestParameters: SetTargetProvidersTargetsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.setTargetProvidersTargetsRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Upserts a target provider.
+     */
+    async upsertTargetProviderRaw(requestParameters: UpsertTargetProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpsertTargetProvider200Response>> {
+        if (requestParameters['workspace'] == null) {
+            throw new runtime.RequiredError(
+                'workspace',
+                'Required parameter "workspace" was null or undefined when calling upsertTargetProvider().'
+            );
+        }
+
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling upsertTargetProvider().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/{workspace}/target-provider/name/{name}`.replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters['workspace']))).replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UpsertTargetProvider200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Upserts a target provider.
+     */
+    async upsertTargetProvider(requestParameters: UpsertTargetProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UpsertTargetProvider200Response> {
+        const response = await this.upsertTargetProviderRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
 }
