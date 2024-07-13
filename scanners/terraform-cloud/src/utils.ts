@@ -1,4 +1,4 @@
-import { SetTargetProvidersTargetsRequest } from "@repo/api";
+import { SetProvidersTargetsRequestInner } from "@repo/api";
 
 export function omitNullUndefined(obj: object) {
   return Object.entries(obj).reduce<Record<string, string>>(
@@ -10,6 +10,4 @@ export function omitNullUndefined(obj: object) {
   );
 }
 
-export type ScannerFunc = () => Promise<
-  SetTargetProvidersTargetsRequest["targets"]
->;
+export type ScannerFunc = () => Promise<SetProvidersTargetsRequestInner[]>;
