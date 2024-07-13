@@ -4,11 +4,48 @@ import { api } from "./api.js";
 import { logger } from "@repo/logger";
 import { ScannerFunc } from "./utils.js";
 import { terraform } from "./terraform/index.js";
+import { Workspace } from "./terraform/workspaces.js";
 
 const getWorkspaces: ScannerFunc = async () => {
-  const workspaces = terraform.workspaces.list(env.TERRAFORM_CLOUD_ORG_NAME);
-  console.log(workspaces);
-  return [];
+  let page = 1;
+  const pageSize = 10;
+  const workspaces: Workspace[] = [];
+  for (;;) {
+    const ws = await terraform.workspaces.list(env.TERRAFORM_CLOUD_ORG_NAME, {
+      "page[number]": page,
+      "page[size]": pageSize,
+    });
+    workspaces.push(...ws);
+    if (ws.length !== pageSize) break;
+    page++;
+  }
+
+  return workspaces.map((ws) => {
+    const tagNames = Object.fromEntries(
+      ws.attributes.tagNames.map((tag) => [
+        `terraform-cloud/tag-${tag.toLowerCase()}`,
+        tag.toLowerCase(),
+      ])
+    );
+    s;
+    return {
+      name: ws.attributes.name,
+      version: "terraform/v1",
+      kind: "TerraformCloudWorkspace",
+      provider: "TerraformCloud",
+      config: {
+        org: env.TERRAFORM_CLOUD_ORG_NAME,
+        workspace: ws.attributes.name,
+      },
+      labels: {
+        "terraform-cloud/workspace-id": ws.id,
+        "terraform-cloud/organization-name": env.TERRAFORM_CLOUD_ORG_NAME,
+        "terraform-cloud/terraform-version": ws.attributes.terraformVersion,
+        "terraform-cloud/auto-apply": String(ws.attributes.autoApply),
+        ...tagNames,
+      },
+    };
+  });
 };
 
 const scan = async () => {
@@ -28,7 +65,7 @@ const scan = async () => {
   logger.info(`Scanner ID: ${id}`, { id });
 
   const workspaceTargets = await getWorkspaces();
-  const targets = [...workspaceTargets, ...workspaceTargets];
+  const targets = workspaceTargets;
   logger.info(
     `Sending ${targets.length} terraform workspace target(s) to CtrlPlane`,
     { count: targets.length }

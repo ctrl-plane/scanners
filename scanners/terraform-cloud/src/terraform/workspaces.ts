@@ -69,12 +69,16 @@ export type Workspace = Response<{
   vcsRepoIdentifier: string | null;
   workingDirectory: string;
   workspaceKpisRunsCount: any;
+  tagNames: string[];
 }>;
 
 export class TerraformWorkspaces extends TerraformRequest {
-  list(orgName: string) {
+  list(
+    orgName: string,
+    config?: { "page[number]"?: number; "page[size]"?: number }
+  ) {
     const url = `/api/v2/organizations/${orgName}/workspaces`;
-    return this.get<Workspace[]>(url);
+    return this.get<Workspace[]>(url, { params: config });
   }
 
   show(workspaceId: string) {

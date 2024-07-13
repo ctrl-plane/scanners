@@ -1,4 +1,4 @@
-import { AxiosInstance } from "axios";
+import { AxiosInstance, AxiosRequestConfig } from "axios";
 
 export interface Request<T, Attributes> {
   data: {
@@ -28,8 +28,11 @@ export interface Response<Attributes> {
 export abstract class TerraformRequest {
   constructor(protected client: AxiosInstance) {}
 
-  protected async get<Entity>(path: string): Promise<Entity> {
-    const response = await this.client.get<Entity>(path);
+  protected async get<Entity>(
+    path: string,
+    config?: AxiosRequestConfig
+  ): Promise<Entity> {
+    const response = await this.client.get<Entity>(path, config);
     return response.data;
   }
 
