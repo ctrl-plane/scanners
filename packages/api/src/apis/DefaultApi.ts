@@ -17,6 +17,7 @@ import * as runtime from '../runtime';
 import type {
   AcknowledgeJob200Response,
   AcknowledgeJobRequest,
+  GetJobExecution200Response,
   GetNextJobs200Response,
   SetTargetProvidersTargetsRequest,
   UpdateJobDispatcher200Response,
@@ -28,6 +29,8 @@ import {
     AcknowledgeJob200ResponseToJSON,
     AcknowledgeJobRequestFromJSON,
     AcknowledgeJobRequestToJSON,
+    GetJobExecution200ResponseFromJSON,
+    GetJobExecution200ResponseToJSON,
     GetNextJobs200ResponseFromJSON,
     GetNextJobs200ResponseToJSON,
     SetTargetProvidersTargetsRequestFromJSON,
@@ -43,6 +46,10 @@ import {
 export interface AcknowledgeJobOperationRequest {
     dispatcherId: string;
     acknowledgeJobRequest: AcknowledgeJobRequest;
+}
+
+export interface GetJobExecutionRequest {
+    executionId: string;
 }
 
 export interface GetNextJobsRequest {
@@ -61,7 +68,7 @@ export interface UpdateJobDispatcherOperationRequest {
 }
 
 export interface UpdateJobExecutionOperationRequest {
-    excutionId: string;
+    executionId: string;
     updateJobExecutionRequest: UpdateJobExecutionRequest;
 }
 
@@ -115,6 +122,39 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async acknowledgeJob(requestParameters: AcknowledgeJobOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AcknowledgeJob200Response> {
         const response = await this.acknowledgeJobRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get a job execution
+     */
+    async getJobExecutionRaw(requestParameters: GetJobExecutionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetJobExecution200Response>> {
+        if (requestParameters['executionId'] == null) {
+            throw new runtime.RequiredError(
+                'executionId',
+                'Required parameter "executionId" was null or undefined when calling getJobExecution().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/job/executions/{executionId}`.replace(`{${"executionId"}}`, encodeURIComponent(String(requestParameters['executionId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetJobExecution200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a job execution
+     */
+    async getJobExecution(requestParameters: GetJobExecutionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetJobExecution200Response> {
+        const response = await this.getJobExecutionRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -244,13 +284,13 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Acknowledge a job
+     * Update a job execution
      */
     async updateJobExecutionRaw(requestParameters: UpdateJobExecutionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AcknowledgeJob200Response>> {
-        if (requestParameters['excutionId'] == null) {
+        if (requestParameters['executionId'] == null) {
             throw new runtime.RequiredError(
-                'excutionId',
-                'Required parameter "excutionId" was null or undefined when calling updateJobExecution().'
+                'executionId',
+                'Required parameter "executionId" was null or undefined when calling updateJobExecution().'
             );
         }
 
@@ -268,7 +308,7 @@ export class DefaultApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/job/excutions/{excutionId}`.replace(`{${"excutionId"}}`, encodeURIComponent(String(requestParameters['excutionId']))),
+            path: `/v1/job/executions/{executionId}`.replace(`{${"executionId"}}`, encodeURIComponent(String(requestParameters['executionId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -279,7 +319,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Acknowledge a job
+     * Update a job execution
      */
     async updateJobExecution(requestParameters: UpdateJobExecutionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AcknowledgeJob200Response> {
         const response = await this.updateJobExecutionRaw(requestParameters, initOverrides);

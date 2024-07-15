@@ -227,17 +227,67 @@ paths:
                         - jobConfigId
                         - jobDispatcherId
                         - jobDispatcherConfig
-  /v1/job/excutions/{excutionId}:
-    post:
-      summary: Acknowledge a job
-      operationId: updateJobExecution
+  /v1/job/executions/{executionId}:
+    get:
+      summary: Get a job execution
+      operationId: getJobExecution
       parameters:
-        - name: excutionId
+        - name: executionId
           in: path
           required: true
           schema:
             type: string
-          description: The excution ID
+          description: The execution ID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  jobDispatcherId:
+                    type: string
+                  jobDispatcherConfig:
+                    type: object
+                  externalRunId:
+                    type: string
+                  release:
+                    type: object
+                  deployment:
+                    type: object
+                  config:
+                    type: object
+                  runbook:
+                    type: object
+                  targets:
+                    type: object
+                  environment:
+                    type: object
+                required:
+                  - id
+                  - status
+                  - message
+                  - jobDispatcherId
+                  - jobDispatcherConfig
+                  - externalRunId
+                  - config
+    post:
+      summary: Update a job execution
+      operationId: updateJobExecution
+      parameters:
+        - name: executionId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The execution ID
       requestBody:
         required: true
         content:

@@ -1,7 +1,7 @@
 import { CronJob } from "cron";
 import { env } from "./config.js";
 import { api } from "./api.js";
-import { getBatchClient, getJobStatus } from "./k8s.js";
+import { getBatchClient } from "./k8s.js";
 
 import { logger } from "@repo/logger";
 import handlebars from "handlebars";
@@ -23,7 +23,7 @@ const deployManifest = async (
     console.log(`Deploying manifest: ${namespace}/${name}`);
     if (name == null) {
       await api.updateJobExecution({
-        excutionId: jobExecutionId,
+        executionId: jobExecutionId,
         updateJobExecutionRequest: {
           status: "invalid_job_dispatcher",
           message: "Job name not found.",
@@ -35,7 +35,7 @@ const deployManifest = async (
     console.log(`Creating job - ${namespace}/${name}`);
     await getBatchClient().createNamespacedJob(namespace, manifest);
     await api.updateJobExecution({
-      excutionId: jobExecutionId,
+      executionId: jobExecutionId,
       updateJobExecutionRequest: {
         status: "in_progress",
         externalRunId: `${namespace}/${name}`,
@@ -45,7 +45,7 @@ const deployManifest = async (
   } catch (e: any) {
     console.log(e);
     await api.updateJobExecution({
-      excutionId: jobExecutionId,
+      executionId: jobExecutionId,
       updateJobExecutionRequest: {
         status: "invalid_job_dispatcher",
         message: e.body.message,
@@ -72,9 +72,10 @@ const scan = async () => {
   await Promise.allSettled(
     jobExecutions.map(async (jobExecution) => {
       console.log("[*] Running job execution", jobExecution.id);
+      const je = await api.getJobExecution({ executionId: jobExecution.id });
       const manifest = renderManifest(
         (jobExecution.jobDispatcherConfig as any).manifest,
-        jobExecution
+        je
       );
       const namespace = manifest?.metadata?.namespace ?? env.KUBE_NAMESPACE;
       await api.acknowledgeJob({
