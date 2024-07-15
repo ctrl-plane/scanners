@@ -16,44 +16,44 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface UpsertTargetProvider200Response
+ * @interface UpdateJobDispatcher200Response
  */
-export interface UpsertTargetProvider200Response {
+export interface UpdateJobDispatcher200Response {
     /**
      * 
      * @type {string}
-     * @memberof UpsertTargetProvider200Response
+     * @memberof UpdateJobDispatcher200Response
      */
     id: string;
     /**
      * 
      * @type {string}
-     * @memberof UpsertTargetProvider200Response
+     * @memberof UpdateJobDispatcher200Response
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof UpsertTargetProvider200Response
+     * @memberof UpdateJobDispatcher200Response
      */
     workspaceId: string;
 }
 
 /**
- * Check if a given object implements the UpsertTargetProvider200Response interface.
+ * Check if a given object implements the UpdateJobDispatcher200Response interface.
  */
-export function instanceOfUpsertTargetProvider200Response(value: object): value is UpsertTargetProvider200Response {
+export function instanceOfUpdateJobDispatcher200Response(value: object): value is UpdateJobDispatcher200Response {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('workspaceId' in value) || value['workspaceId'] === undefined) return false;
     return true;
 }
 
-export function UpsertTargetProvider200ResponseFromJSON(json: any): UpsertTargetProvider200Response {
-    return UpsertTargetProvider200ResponseFromJSONTyped(json, false);
+export function UpdateJobDispatcher200ResponseFromJSON(json: any): UpdateJobDispatcher200Response {
+    return UpdateJobDispatcher200ResponseFromJSONTyped(json, false);
 }
 
-export function UpsertTargetProvider200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpsertTargetProvider200Response {
+export function UpdateJobDispatcher200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateJobDispatcher200Response {
     if (json == null) {
         return json;
     }
@@ -65,7 +65,7 @@ export function UpsertTargetProvider200ResponseFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function UpsertTargetProvider200ResponseToJSON(value?: UpsertTargetProvider200Response | null): any {
+export function UpdateJobDispatcher200ResponseToJSON(value?: UpdateJobDispatcher200Response | null): any {
     if (value == null) {
         return value;
     }

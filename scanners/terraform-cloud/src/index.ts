@@ -27,7 +27,6 @@ const getWorkspaces: ScannerFunc = async () => {
         tag.toLowerCase(),
       ])
     );
-    s;
     return {
       name: ws.attributes.name,
       version: "terraform/v1",
