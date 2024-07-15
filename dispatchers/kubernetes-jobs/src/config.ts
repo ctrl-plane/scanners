@@ -14,6 +14,9 @@ export const env = createEnv({
 
     CRON_ENABLED: z.boolean().default(true),
     CRON_TIME: z.string().default("* * * * *"),
+
+    KUBE_CONFIG_PATH: z.string().optional(),
+    KUBE_NAMESPACE: z.string().default("default"),
   },
   runtimeEnv: process.env,
 });

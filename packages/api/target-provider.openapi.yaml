@@ -227,3 +227,41 @@ paths:
                         - jobConfigId
                         - jobDispatcherId
                         - jobDispatcherConfig
+  /v1/job/excutions/{excutionId}:
+    post:
+      summary: Acknowledge a job
+      operationId: updateJobExecution
+      parameters:
+        - name: excutionId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The excution ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                message:
+                  type: [string, "null"]
+                  nullable: true
+                externalRunId:
+                  type: [string, "null"]
+                  nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                required:
+                  - id

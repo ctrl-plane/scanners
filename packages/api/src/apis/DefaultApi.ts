@@ -21,6 +21,7 @@ import type {
   SetTargetProvidersTargetsRequest,
   UpdateJobDispatcher200Response,
   UpdateJobDispatcherRequest,
+  UpdateJobExecutionRequest,
 } from '../models/index';
 import {
     AcknowledgeJob200ResponseFromJSON,
@@ -35,6 +36,8 @@ import {
     UpdateJobDispatcher200ResponseToJSON,
     UpdateJobDispatcherRequestFromJSON,
     UpdateJobDispatcherRequestToJSON,
+    UpdateJobExecutionRequestFromJSON,
+    UpdateJobExecutionRequestToJSON,
 } from '../models/index';
 
 export interface AcknowledgeJobOperationRequest {
@@ -55,6 +58,11 @@ export interface SetTargetProvidersTargetsOperationRequest {
 export interface UpdateJobDispatcherOperationRequest {
     workspace: string;
     updateJobDispatcherRequest: UpdateJobDispatcherRequest;
+}
+
+export interface UpdateJobExecutionOperationRequest {
+    excutionId: string;
+    updateJobExecutionRequest: UpdateJobExecutionRequest;
 }
 
 export interface UpsertTargetProviderRequest {
@@ -232,6 +240,49 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async updateJobDispatcher(requestParameters: UpdateJobDispatcherOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UpdateJobDispatcher200Response> {
         const response = await this.updateJobDispatcherRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Acknowledge a job
+     */
+    async updateJobExecutionRaw(requestParameters: UpdateJobExecutionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AcknowledgeJob200Response>> {
+        if (requestParameters['excutionId'] == null) {
+            throw new runtime.RequiredError(
+                'excutionId',
+                'Required parameter "excutionId" was null or undefined when calling updateJobExecution().'
+            );
+        }
+
+        if (requestParameters['updateJobExecutionRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateJobExecutionRequest',
+                'Required parameter "updateJobExecutionRequest" was null or undefined when calling updateJobExecution().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/v1/job/excutions/{excutionId}`.replace(`{${"excutionId"}}`, encodeURIComponent(String(requestParameters['excutionId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateJobExecutionRequestToJSON(requestParameters['updateJobExecutionRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AcknowledgeJob200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Acknowledge a job
+     */
+    async updateJobExecution(requestParameters: UpdateJobExecutionOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AcknowledgeJob200Response> {
+        const response = await this.updateJobExecutionRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

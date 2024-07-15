@@ -8,3 +8,4 @@ export * from './SetTargetProvidersTargetsRequest';
 export * from './SetTargetProvidersTargetsRequestTargetsInner';
 export * from './UpdateJobDispatcher200Response';
 export * from './UpdateJobDispatcherRequest';
+export * from './UpdateJobExecutionRequest';

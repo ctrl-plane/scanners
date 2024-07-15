@@ -15,11 +15,14 @@
     "preset": "@repo/jest-presets/node"
   },
   "dependencies": {
+    "@kubernetes/client-node": "^0.21.0",
     "@repo/api": "workspace:*",
     "@repo/logger": "workspace:*",
     "@t3-oss/env-core": "^0.10.1",
     "cron": "^3.1.7",
     "dotenv": "^16.4.5",
+    "handlebars": "^4.7.8",
+    "js-yaml": "^4.1.0",
     "ts-is-present": "^1.2.2",
     "zod": "^3.23.8"
   },
@@ -28,6 +31,7 @@
     "@repo/jest-presets": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/jest": "^29.5.12",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.11.24",
     "@types/semver": "^7.5.8",
     "esbuild": "^0.20.1",

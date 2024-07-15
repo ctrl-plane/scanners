@@ -9,5 +9,6 @@ models/SetTargetProvidersTargetsRequest.ts
 models/SetTargetProvidersTargetsRequestTargetsInner.ts
 models/UpdateJobDispatcher200Response.ts
 models/UpdateJobDispatcherRequest.ts
+models/UpdateJobExecutionRequest.ts
 models/index.ts
 runtime.ts
