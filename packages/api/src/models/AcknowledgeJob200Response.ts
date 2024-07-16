@@ -21,17 +21,17 @@ import { mapValues } from '../runtime';
 export interface AcknowledgeJob200Response {
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof AcknowledgeJob200Response
      */
-    id: string;
+    success: boolean;
 }
 
 /**
  * Check if a given object implements the AcknowledgeJob200Response interface.
  */
 export function instanceOfAcknowledgeJob200Response(value: object): value is AcknowledgeJob200Response {
-    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('success' in value) || value['success'] === undefined) return false;
     return true;
 }
 
@@ -45,7 +45,7 @@ export function AcknowledgeJob200ResponseFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
-        'id': json['id'],
+        'success': json['success'],
     };
 }
 
@@ -55,7 +55,7 @@ export function AcknowledgeJob200ResponseToJSON(value?: AcknowledgeJob200Respons
     }
     return {
         
-        'id': value['id'],
+        'success': value['success'],
     };
 }
 

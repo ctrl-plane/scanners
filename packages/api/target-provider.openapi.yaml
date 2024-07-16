@@ -149,40 +149,60 @@ paths:
           description: Deployment target not found
         "500":
           description: Internal server error
-  /v1/job/dispatchers/{dispatcherId}/queue/achnowledge:
-    post:
-      summary: Acknowledge a job
-      operationId: acknowledgeJob
+  /v1/job/dispatchers/{dispatcherId}/executions/running:
+    get:
+      summary: Get a running dispatchers execution
+      operationId: getDispatcherRunningExecutions
       parameters:
         - name: dispatcherId
           in: path
           required: true
           schema:
             type: string
-          description: The dispatcher ID
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jobExecutionId:
-                  type: string
-              required:
-                - jobExecutionId
+          description: The execution ID
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                required:
-                  - id
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    status:
+                      type: string
+                    message:
+                      type: string
+                    jobDispatcherId:
+                      type: string
+                    jobDispatcherConfig:
+                      type: object
+                    externalRunId:
+                      type: [string, "null"]
+                      nullable: true
+                    release:
+                      type: object
+                    deployment:
+                      type: object
+                    config:
+                      type: object
+                    runbook:
+                      type: object
+                    target:
+                      type: object
+                    environment:
+                      type: object
+                  required:
+                    - id
+                    - status
+                    - message
+                    - jobDispatcherId
+                    - jobDispatcherConfig
+                    - externalRunId
+                    - config
   /v1/job/dispatchers/{dispatcherId}/queue/next:
     get:
       summary: Get the next jobs
@@ -266,7 +286,7 @@ paths:
                     type: object
                   runbook:
                     type: object
-                  targets:
+                  target:
                     type: object
                   environment:
                     type: object
@@ -278,7 +298,7 @@ paths:
                   - jobDispatcherConfig
                   - externalRunId
                   - config
-    post:
+    patch:
       summary: Update a job execution
       operationId: updateJobExecution
       parameters:
@@ -315,3 +335,26 @@ paths:
                     type: string
                 required:
                   - id
+  /v1/job/executions/{executionId}/acknowledge:
+    post:
+      summary: Acknowledge a job
+      operationId: acknowledgeJob
+      parameters:
+        - name: executionId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The dispatcher ID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                required:
+                  - success

@@ -1,12 +1,12 @@
 {
-  "name": "@ctrlplane/kubernetes-jobs",
+  "name": "@ctrlplane/kubernetes-job",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist",
-    "dev": "nodemon --exec \"node -r esbuild-register ./src/index.ts\" -e .ts",
+    "dev": "tsx watch --clear-screen=false src/index.ts",
     "lint": "tsc --noEmit && eslint \"src/**/*.ts*\" --max-warnings 0",
     "start": "node -r esbuild-register ./src/index.ts",
     "test": "jest --detectOpenHandles"
@@ -24,6 +24,7 @@
     "handlebars": "^4.7.8",
     "js-yaml": "^4.1.0",
     "ts-is-present": "^1.2.2",
+    "tsx": "^4.16.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {

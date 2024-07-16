@@ -16,87 +16,87 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface GetJobExecution200Response
+ * @interface GetDispatcherRunningExecutions200ResponseInner
  */
-export interface GetJobExecution200Response {
+export interface GetDispatcherRunningExecutions200ResponseInner {
     /**
      * 
      * @type {string}
-     * @memberof GetJobExecution200Response
+     * @memberof GetDispatcherRunningExecutions200ResponseInner
      */
     id: string;
     /**
      * 
      * @type {string}
-     * @memberof GetJobExecution200Response
+     * @memberof GetDispatcherRunningExecutions200ResponseInner
      */
     status: string;
     /**
      * 
      * @type {string}
-     * @memberof GetJobExecution200Response
+     * @memberof GetDispatcherRunningExecutions200ResponseInner
      */
     message: string;
     /**
      * 
      * @type {string}
-     * @memberof GetJobExecution200Response
+     * @memberof GetDispatcherRunningExecutions200ResponseInner
      */
     jobDispatcherId: string;
     /**
      * 
      * @type {object}
-     * @memberof GetJobExecution200Response
+     * @memberof GetDispatcherRunningExecutions200ResponseInner
      */
     jobDispatcherConfig: object;
     /**
      * 
      * @type {string}
-     * @memberof GetJobExecution200Response
+     * @memberof GetDispatcherRunningExecutions200ResponseInner
      */
-    externalRunId: string;
+    externalRunId: string | null;
     /**
      * 
      * @type {object}
-     * @memberof GetJobExecution200Response
+     * @memberof GetDispatcherRunningExecutions200ResponseInner
      */
     release?: object;
     /**
      * 
      * @type {object}
-     * @memberof GetJobExecution200Response
+     * @memberof GetDispatcherRunningExecutions200ResponseInner
      */
     deployment?: object;
     /**
      * 
      * @type {object}
-     * @memberof GetJobExecution200Response
+     * @memberof GetDispatcherRunningExecutions200ResponseInner
      */
     config: object;
     /**
      * 
      * @type {object}
-     * @memberof GetJobExecution200Response
+     * @memberof GetDispatcherRunningExecutions200ResponseInner
      */
     runbook?: object;
     /**
      * 
      * @type {object}
-     * @memberof GetJobExecution200Response
+     * @memberof GetDispatcherRunningExecutions200ResponseInner
      */
     target?: object;
     /**
      * 
      * @type {object}
-     * @memberof GetJobExecution200Response
+     * @memberof GetDispatcherRunningExecutions200ResponseInner
      */
     environment?: object;
 }
 
 /**
- * Check if a given object implements the GetJobExecution200Response interface.
+ * Check if a given object implements the GetDispatcherRunningExecutions200ResponseInner interface.
  */
-export function instanceOfGetJobExecution200Response(value: object): value is GetJobExecution200Response {
+export function instanceOfGetDispatcherRunningExecutions200ResponseInner(value: object): value is GetDispatcherRunningExecutions200ResponseInner {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
     if (!('message' in value) || value['message'] === undefined) return false;
@@ -107,11 +107,11 @@ export function instanceOfGetJobExecution200Response(value: object): value is Ge
     return true;
 }
 
-export function GetJobExecution200ResponseFromJSON(json: any): GetJobExecution200Response {
-    return GetJobExecution200ResponseFromJSONTyped(json, false);
+export function GetDispatcherRunningExecutions200ResponseInnerFromJSON(json: any): GetDispatcherRunningExecutions200ResponseInner {
+    return GetDispatcherRunningExecutions200ResponseInnerFromJSONTyped(json, false);
 }
 
-export function GetJobExecution200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetJobExecution200Response {
+export function GetDispatcherRunningExecutions200ResponseInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetDispatcherRunningExecutions200ResponseInner {
     if (json == null) {
         return json;
     }
@@ -132,7 +132,7 @@ export function GetJobExecution200ResponseFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function GetJobExecution200ResponseToJSON(value?: GetJobExecution200Response | null): any {
+export function GetDispatcherRunningExecutions200ResponseInnerToJSON(value?: GetDispatcherRunningExecutions200ResponseInner | null): any {
     if (value == null) {
         return value;
     }

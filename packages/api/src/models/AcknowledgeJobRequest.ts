@@ -21,17 +21,17 @@ import { mapValues } from '../runtime';
 export interface AcknowledgeJobRequest {
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof AcknowledgeJobRequest
      */
-    jobExecutionId: string;
+    sucess: boolean;
 }
 
 /**
  * Check if a given object implements the AcknowledgeJobRequest interface.
  */
 export function instanceOfAcknowledgeJobRequest(value: object): value is AcknowledgeJobRequest {
-    if (!('jobExecutionId' in value) || value['jobExecutionId'] === undefined) return false;
+    if (!('sucess' in value) || value['sucess'] === undefined) return false;
     return true;
 }
 
@@ -45,7 +45,7 @@ export function AcknowledgeJobRequestFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'jobExecutionId': json['jobExecutionId'],
+        'sucess': json['sucess'],
     };
 }
 
@@ -55,7 +55,7 @@ export function AcknowledgeJobRequestToJSON(value?: AcknowledgeJobRequest | null
     }
     return {
         
-        'jobExecutionId': value['jobExecutionId'],
+        'sucess': value['sucess'],
     };
 }
 
