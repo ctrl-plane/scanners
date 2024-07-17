@@ -42,7 +42,7 @@ export const getJobStatus = async (namespace: string, name: string) => {
     return {};
   } catch (e: any) {
     return {
-      status: "invalid_job_dispatcher" as const,
+      status: "invalid_job_agent" as const,
       message: e.body.message,
     };
   }

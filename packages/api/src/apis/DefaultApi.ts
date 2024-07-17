@@ -16,30 +16,30 @@
 import * as runtime from '../runtime';
 import type {
   AcknowledgeJob200Response,
-  GetDispatcherRunningExecutions200ResponseInner,
+  GetAgentRunningExecutions200ResponseInner,
   GetJobExecution200Response,
   GetNextJobs200Response,
   SetTargetProvidersTargetsRequest,
-  UpdateJobDispatcher200Response,
-  UpdateJobDispatcherRequest,
+  UpdateJobAgent200Response,
+  UpdateJobAgentRequest,
   UpdateJobExecution200Response,
   UpdateJobExecutionRequest,
 } from '../models/index';
 import {
     AcknowledgeJob200ResponseFromJSON,
     AcknowledgeJob200ResponseToJSON,
-    GetDispatcherRunningExecutions200ResponseInnerFromJSON,
-    GetDispatcherRunningExecutions200ResponseInnerToJSON,
+    GetAgentRunningExecutions200ResponseInnerFromJSON,
+    GetAgentRunningExecutions200ResponseInnerToJSON,
     GetJobExecution200ResponseFromJSON,
     GetJobExecution200ResponseToJSON,
     GetNextJobs200ResponseFromJSON,
     GetNextJobs200ResponseToJSON,
     SetTargetProvidersTargetsRequestFromJSON,
     SetTargetProvidersTargetsRequestToJSON,
-    UpdateJobDispatcher200ResponseFromJSON,
-    UpdateJobDispatcher200ResponseToJSON,
-    UpdateJobDispatcherRequestFromJSON,
-    UpdateJobDispatcherRequestToJSON,
+    UpdateJobAgent200ResponseFromJSON,
+    UpdateJobAgent200ResponseToJSON,
+    UpdateJobAgentRequestFromJSON,
+    UpdateJobAgentRequestToJSON,
     UpdateJobExecution200ResponseFromJSON,
     UpdateJobExecution200ResponseToJSON,
     UpdateJobExecutionRequestFromJSON,
@@ -50,8 +50,8 @@ export interface AcknowledgeJobRequest {
     executionId: string;
 }
 
-export interface GetDispatcherRunningExecutionsRequest {
-    dispatcherId: string;
+export interface GetAgentRunningExecutionsRequest {
+    agentId: string;
 }
 
 export interface GetJobExecutionRequest {
@@ -59,7 +59,7 @@ export interface GetJobExecutionRequest {
 }
 
 export interface GetNextJobsRequest {
-    dispatcherId: string;
+    agentId: string;
 }
 
 export interface SetTargetProvidersTargetsOperationRequest {
@@ -68,9 +68,9 @@ export interface SetTargetProvidersTargetsOperationRequest {
     setTargetProvidersTargetsRequest: SetTargetProvidersTargetsRequest;
 }
 
-export interface UpdateJobDispatcherOperationRequest {
+export interface UpdateJobAgentOperationRequest {
     workspace: string;
-    updateJobDispatcherRequest: UpdateJobDispatcherRequest;
+    updateJobAgentRequest: UpdateJobAgentRequest;
 }
 
 export interface UpdateJobExecutionOperationRequest {
@@ -122,13 +122,13 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a running dispatchers execution
+     * Get a running agents execution
      */
-    async getDispatcherRunningExecutionsRaw(requestParameters: GetDispatcherRunningExecutionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<GetDispatcherRunningExecutions200ResponseInner>>> {
-        if (requestParameters['dispatcherId'] == null) {
+    async getAgentRunningExecutionsRaw(requestParameters: GetAgentRunningExecutionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<GetAgentRunningExecutions200ResponseInner>>> {
+        if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
-                'dispatcherId',
-                'Required parameter "dispatcherId" was null or undefined when calling getDispatcherRunningExecutions().'
+                'agentId',
+                'Required parameter "agentId" was null or undefined when calling getAgentRunningExecutions().'
             );
         }
 
@@ -137,20 +137,20 @@ export class DefaultApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/job/dispatchers/{dispatcherId}/executions/running`.replace(`{${"dispatcherId"}}`, encodeURIComponent(String(requestParameters['dispatcherId']))),
+            path: `/v1/job/agents/{agentId}/executions/running`.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(GetDispatcherRunningExecutions200ResponseInnerFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(GetAgentRunningExecutions200ResponseInnerFromJSON));
     }
 
     /**
-     * Get a running dispatchers execution
+     * Get a running agents execution
      */
-    async getDispatcherRunningExecutions(requestParameters: GetDispatcherRunningExecutionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<GetDispatcherRunningExecutions200ResponseInner>> {
-        const response = await this.getDispatcherRunningExecutionsRaw(requestParameters, initOverrides);
+    async getAgentRunningExecutions(requestParameters: GetAgentRunningExecutionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<GetAgentRunningExecutions200ResponseInner>> {
+        const response = await this.getAgentRunningExecutionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -191,10 +191,10 @@ export class DefaultApi extends runtime.BaseAPI {
      * Get the next jobs
      */
     async getNextJobsRaw(requestParameters: GetNextJobsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetNextJobs200Response>> {
-        if (requestParameters['dispatcherId'] == null) {
+        if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
-                'dispatcherId',
-                'Required parameter "dispatcherId" was null or undefined when calling getNextJobs().'
+                'agentId',
+                'Required parameter "agentId" was null or undefined when calling getNextJobs().'
             );
         }
 
@@ -203,7 +203,7 @@ export class DefaultApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/job/dispatchers/{dispatcherId}/queue/next`.replace(`{${"dispatcherId"}}`, encodeURIComponent(String(requestParameters['dispatcherId']))),
+            path: `/v1/job/agents/{agentId}/queue/next`.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -270,20 +270,20 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Upserts the dispatcher
+     * Upserts the agent
      */
-    async updateJobDispatcherRaw(requestParameters: UpdateJobDispatcherOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdateJobDispatcher200Response>> {
+    async updateJobAgentRaw(requestParameters: UpdateJobAgentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdateJobAgent200Response>> {
         if (requestParameters['workspace'] == null) {
             throw new runtime.RequiredError(
                 'workspace',
-                'Required parameter "workspace" was null or undefined when calling updateJobDispatcher().'
+                'Required parameter "workspace" was null or undefined when calling updateJobAgent().'
             );
         }
 
-        if (requestParameters['updateJobDispatcherRequest'] == null) {
+        if (requestParameters['updateJobAgentRequest'] == null) {
             throw new runtime.RequiredError(
-                'updateJobDispatcherRequest',
-                'Required parameter "updateJobDispatcherRequest" was null or undefined when calling updateJobDispatcher().'
+                'updateJobAgentRequest',
+                'Required parameter "updateJobAgentRequest" was null or undefined when calling updateJobAgent().'
             );
         }
 
@@ -294,21 +294,21 @@ export class DefaultApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/{workspace}/job/dispatcher/name`.replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters['workspace']))),
+            path: `/v1/{workspace}/job/agent/name`.replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters['workspace']))),
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
-            body: UpdateJobDispatcherRequestToJSON(requestParameters['updateJobDispatcherRequest']),
+            body: UpdateJobAgentRequestToJSON(requestParameters['updateJobAgentRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => UpdateJobDispatcher200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => UpdateJobAgent200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Upserts the dispatcher
+     * Upserts the agent
      */
-    async updateJobDispatcher(requestParameters: UpdateJobDispatcherOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UpdateJobDispatcher200Response> {
-        const response = await this.updateJobDispatcherRaw(requestParameters, initOverrides);
+    async updateJobAgent(requestParameters: UpdateJobAgentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UpdateJobAgent200Response> {
+        const response = await this.updateJobAgentRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -358,7 +358,7 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Upserts a target provider.
      */
-    async upsertTargetProviderRaw(requestParameters: UpsertTargetProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdateJobDispatcher200Response>> {
+    async upsertTargetProviderRaw(requestParameters: UpsertTargetProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdateJobAgent200Response>> {
         if (requestParameters['workspace'] == null) {
             throw new runtime.RequiredError(
                 'workspace',
@@ -384,13 +384,13 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => UpdateJobDispatcher200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => UpdateJobAgent200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Upserts a target provider.
      */
-    async upsertTargetProvider(requestParameters: UpsertTargetProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UpdateJobDispatcher200Response> {
+    async upsertTargetProvider(requestParameters: UpsertTargetProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UpdateJobAgent200Response> {
         const response = await this.upsertTargetProviderRaw(requestParameters, initOverrides);
         return await response.value();
     }

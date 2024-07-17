@@ -16,37 +16,37 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface UpdateJobDispatcherRequest
+ * @interface UpdateJobAgentRequest
  */
-export interface UpdateJobDispatcherRequest {
+export interface UpdateJobAgentRequest {
     /**
      * 
      * @type {string}
-     * @memberof UpdateJobDispatcherRequest
+     * @memberof UpdateJobAgentRequest
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof UpdateJobDispatcherRequest
+     * @memberof UpdateJobAgentRequest
      */
     type: string;
 }
 
 /**
- * Check if a given object implements the UpdateJobDispatcherRequest interface.
+ * Check if a given object implements the UpdateJobAgentRequest interface.
  */
-export function instanceOfUpdateJobDispatcherRequest(value: object): value is UpdateJobDispatcherRequest {
+export function instanceOfUpdateJobAgentRequest(value: object): value is UpdateJobAgentRequest {
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     return true;
 }
 
-export function UpdateJobDispatcherRequestFromJSON(json: any): UpdateJobDispatcherRequest {
-    return UpdateJobDispatcherRequestFromJSONTyped(json, false);
+export function UpdateJobAgentRequestFromJSON(json: any): UpdateJobAgentRequest {
+    return UpdateJobAgentRequestFromJSONTyped(json, false);
 }
 
-export function UpdateJobDispatcherRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateJobDispatcherRequest {
+export function UpdateJobAgentRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateJobAgentRequest {
     if (json == null) {
         return json;
     }
@@ -57,7 +57,7 @@ export function UpdateJobDispatcherRequestFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function UpdateJobDispatcherRequestToJSON(value?: UpdateJobDispatcherRequest | null): any {
+export function UpdateJobAgentRequestToJSON(value?: UpdateJobAgentRequest | null): any {
     if (value == null) {
         return value;
     }

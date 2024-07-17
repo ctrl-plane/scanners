@@ -2,4 +2,4 @@ packages:
   - "scanners/*"
   - "packages/*"
   - "tooling/*"
-  - "dispatchers/*"
+  - "agents/*"

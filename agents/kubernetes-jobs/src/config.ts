@@ -10,7 +10,7 @@ export const env = createEnv({
     CTRLPLANE_API_KEY: z.string(),
 
     CTRLPLANE_WORKSPACE: z.string(),
-    CTRLPLANE_DISPATCHER_NAME: z.string(),
+    CTRLPLANE_AGENT_NAME: z.string(),
 
     CRON_ENABLED: z.boolean().default(true),
     CRON_TIME: z.string().default("* * * * *"),

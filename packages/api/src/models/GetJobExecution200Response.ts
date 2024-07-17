@@ -42,13 +42,13 @@ export interface GetJobExecution200Response {
      * @type {string}
      * @memberof GetJobExecution200Response
      */
-    jobDispatcherId: string;
+    jobAgentId: string;
     /**
      * 
      * @type {object}
      * @memberof GetJobExecution200Response
      */
-    jobDispatcherConfig: object;
+    jobAgentConfig: object;
     /**
      * 
      * @type {string}
@@ -100,8 +100,8 @@ export function instanceOfGetJobExecution200Response(value: object): value is Ge
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
     if (!('message' in value) || value['message'] === undefined) return false;
-    if (!('jobDispatcherId' in value) || value['jobDispatcherId'] === undefined) return false;
-    if (!('jobDispatcherConfig' in value) || value['jobDispatcherConfig'] === undefined) return false;
+    if (!('jobAgentId' in value) || value['jobAgentId'] === undefined) return false;
+    if (!('jobAgentConfig' in value) || value['jobAgentConfig'] === undefined) return false;
     if (!('externalRunId' in value) || value['externalRunId'] === undefined) return false;
     if (!('config' in value) || value['config'] === undefined) return false;
     return true;
@@ -120,8 +120,8 @@ export function GetJobExecution200ResponseFromJSONTyped(json: any, ignoreDiscrim
         'id': json['id'],
         'status': json['status'],
         'message': json['message'],
-        'jobDispatcherId': json['jobDispatcherId'],
-        'jobDispatcherConfig': json['jobDispatcherConfig'],
+        'jobAgentId': json['jobAgentId'],
+        'jobAgentConfig': json['jobAgentConfig'],
         'externalRunId': json['externalRunId'],
         'release': json['release'] == null ? undefined : json['release'],
         'deployment': json['deployment'] == null ? undefined : json['deployment'],
@@ -141,8 +141,8 @@ export function GetJobExecution200ResponseToJSON(value?: GetJobExecution200Respo
         'id': value['id'],
         'status': value['status'],
         'message': value['message'],
-        'jobDispatcherId': value['jobDispatcherId'],
-        'jobDispatcherConfig': value['jobDispatcherConfig'],
+        'jobAgentId': value['jobAgentId'],
+        'jobAgentConfig': value['jobAgentConfig'],
         'externalRunId': value['externalRunId'],
         'release': value['release'],
         'deployment': value['deployment'],

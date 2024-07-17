@@ -16,102 +16,102 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface GetDispatcherRunningExecutions200ResponseInner
+ * @interface GetAgentRunningExecutions200ResponseInner
  */
-export interface GetDispatcherRunningExecutions200ResponseInner {
+export interface GetAgentRunningExecutions200ResponseInner {
     /**
      * 
      * @type {string}
-     * @memberof GetDispatcherRunningExecutions200ResponseInner
+     * @memberof GetAgentRunningExecutions200ResponseInner
      */
     id: string;
     /**
      * 
      * @type {string}
-     * @memberof GetDispatcherRunningExecutions200ResponseInner
+     * @memberof GetAgentRunningExecutions200ResponseInner
      */
     status: string;
     /**
      * 
      * @type {string}
-     * @memberof GetDispatcherRunningExecutions200ResponseInner
+     * @memberof GetAgentRunningExecutions200ResponseInner
      */
     message: string;
     /**
      * 
      * @type {string}
-     * @memberof GetDispatcherRunningExecutions200ResponseInner
+     * @memberof GetAgentRunningExecutions200ResponseInner
      */
-    jobDispatcherId: string;
+    jobAgentId: string;
     /**
      * 
      * @type {object}
-     * @memberof GetDispatcherRunningExecutions200ResponseInner
+     * @memberof GetAgentRunningExecutions200ResponseInner
      */
-    jobDispatcherConfig: object;
+    jobAgentConfig: object;
     /**
      * 
      * @type {string}
-     * @memberof GetDispatcherRunningExecutions200ResponseInner
+     * @memberof GetAgentRunningExecutions200ResponseInner
      */
     externalRunId: string | null;
     /**
      * 
      * @type {object}
-     * @memberof GetDispatcherRunningExecutions200ResponseInner
+     * @memberof GetAgentRunningExecutions200ResponseInner
      */
     release?: object;
     /**
      * 
      * @type {object}
-     * @memberof GetDispatcherRunningExecutions200ResponseInner
+     * @memberof GetAgentRunningExecutions200ResponseInner
      */
     deployment?: object;
     /**
      * 
      * @type {object}
-     * @memberof GetDispatcherRunningExecutions200ResponseInner
+     * @memberof GetAgentRunningExecutions200ResponseInner
      */
     config: object;
     /**
      * 
      * @type {object}
-     * @memberof GetDispatcherRunningExecutions200ResponseInner
+     * @memberof GetAgentRunningExecutions200ResponseInner
      */
     runbook?: object;
     /**
      * 
      * @type {object}
-     * @memberof GetDispatcherRunningExecutions200ResponseInner
+     * @memberof GetAgentRunningExecutions200ResponseInner
      */
     target?: object;
     /**
      * 
      * @type {object}
-     * @memberof GetDispatcherRunningExecutions200ResponseInner
+     * @memberof GetAgentRunningExecutions200ResponseInner
      */
     environment?: object;
 }
 
 /**
- * Check if a given object implements the GetDispatcherRunningExecutions200ResponseInner interface.
+ * Check if a given object implements the GetAgentRunningExecutions200ResponseInner interface.
  */
-export function instanceOfGetDispatcherRunningExecutions200ResponseInner(value: object): value is GetDispatcherRunningExecutions200ResponseInner {
+export function instanceOfGetAgentRunningExecutions200ResponseInner(value: object): value is GetAgentRunningExecutions200ResponseInner {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
     if (!('message' in value) || value['message'] === undefined) return false;
-    if (!('jobDispatcherId' in value) || value['jobDispatcherId'] === undefined) return false;
-    if (!('jobDispatcherConfig' in value) || value['jobDispatcherConfig'] === undefined) return false;
+    if (!('jobAgentId' in value) || value['jobAgentId'] === undefined) return false;
+    if (!('jobAgentConfig' in value) || value['jobAgentConfig'] === undefined) return false;
     if (!('externalRunId' in value) || value['externalRunId'] === undefined) return false;
     if (!('config' in value) || value['config'] === undefined) return false;
     return true;
 }
 
-export function GetDispatcherRunningExecutions200ResponseInnerFromJSON(json: any): GetDispatcherRunningExecutions200ResponseInner {
-    return GetDispatcherRunningExecutions200ResponseInnerFromJSONTyped(json, false);
+export function GetAgentRunningExecutions200ResponseInnerFromJSON(json: any): GetAgentRunningExecutions200ResponseInner {
+    return GetAgentRunningExecutions200ResponseInnerFromJSONTyped(json, false);
 }
 
-export function GetDispatcherRunningExecutions200ResponseInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetDispatcherRunningExecutions200ResponseInner {
+export function GetAgentRunningExecutions200ResponseInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetAgentRunningExecutions200ResponseInner {
     if (json == null) {
         return json;
     }
@@ -120,8 +120,8 @@ export function GetDispatcherRunningExecutions200ResponseInnerFromJSONTyped(json
         'id': json['id'],
         'status': json['status'],
         'message': json['message'],
-        'jobDispatcherId': json['jobDispatcherId'],
-        'jobDispatcherConfig': json['jobDispatcherConfig'],
+        'jobAgentId': json['jobAgentId'],
+        'jobAgentConfig': json['jobAgentConfig'],
         'externalRunId': json['externalRunId'],
         'release': json['release'] == null ? undefined : json['release'],
         'deployment': json['deployment'] == null ? undefined : json['deployment'],
@@ -132,7 +132,7 @@ export function GetDispatcherRunningExecutions200ResponseInnerFromJSONTyped(json
     };
 }
 
-export function GetDispatcherRunningExecutions200ResponseInnerToJSON(value?: GetDispatcherRunningExecutions200ResponseInner | null): any {
+export function GetAgentRunningExecutions200ResponseInnerToJSON(value?: GetAgentRunningExecutions200ResponseInner | null): any {
     if (value == null) {
         return value;
     }
@@ -141,8 +141,8 @@ export function GetDispatcherRunningExecutions200ResponseInnerToJSON(value?: Get
         'id': value['id'],
         'status': value['status'],
         'message': value['message'],
-        'jobDispatcherId': value['jobDispatcherId'],
-        'jobDispatcherConfig': value['jobDispatcherConfig'],
+        'jobAgentId': value['jobAgentId'],
+        'jobAgentConfig': value['jobAgentConfig'],
         'externalRunId': value['externalRunId'],
         'release': value['release'],
         'deployment': value['deployment'],

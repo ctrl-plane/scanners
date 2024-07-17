@@ -36,13 +36,13 @@ export interface GetNextJobs200ResponseJobExecutionsInner {
      * @type {string}
      * @memberof GetNextJobs200ResponseJobExecutionsInner
      */
-    jobDispatcherId: string;
+    jobAgentId: string;
     /**
      * 
      * @type {object}
      * @memberof GetNextJobs200ResponseJobExecutionsInner
      */
-    jobDispatcherConfig: object;
+    jobAgentConfig: object;
     /**
      * 
      * @type {string}
@@ -63,8 +63,8 @@ export interface GetNextJobs200ResponseJobExecutionsInner {
 export function instanceOfGetNextJobs200ResponseJobExecutionsInner(value: object): value is GetNextJobs200ResponseJobExecutionsInner {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
-    if (!('jobDispatcherId' in value) || value['jobDispatcherId'] === undefined) return false;
-    if (!('jobDispatcherConfig' in value) || value['jobDispatcherConfig'] === undefined) return false;
+    if (!('jobAgentId' in value) || value['jobAgentId'] === undefined) return false;
+    if (!('jobAgentConfig' in value) || value['jobAgentConfig'] === undefined) return false;
     if (!('message' in value) || value['message'] === undefined) return false;
     if (!('jobConfigId' in value) || value['jobConfigId'] === undefined) return false;
     return true;
@@ -82,8 +82,8 @@ export function GetNextJobs200ResponseJobExecutionsInnerFromJSONTyped(json: any,
         
         'id': json['id'],
         'status': json['status'],
-        'jobDispatcherId': json['jobDispatcherId'],
-        'jobDispatcherConfig': json['jobDispatcherConfig'],
+        'jobAgentId': json['jobAgentId'],
+        'jobAgentConfig': json['jobAgentConfig'],
         'message': json['message'],
         'jobConfigId': json['jobConfigId'],
     };
@@ -97,8 +97,8 @@ export function GetNextJobs200ResponseJobExecutionsInnerToJSON(value?: GetNextJo
         
         'id': value['id'],
         'status': value['status'],
-        'jobDispatcherId': value['jobDispatcherId'],
-        'jobDispatcherConfig': value['jobDispatcherConfig'],
+        'jobAgentId': value['jobAgentId'],
+        'jobAgentConfig': value['jobAgentConfig'],
         'message': value['message'],
         'jobConfigId': value['jobConfigId'],
     };

@@ -16,44 +16,44 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface UpdateJobDispatcher200Response
+ * @interface UpdateJobAgent200Response
  */
-export interface UpdateJobDispatcher200Response {
+export interface UpdateJobAgent200Response {
     /**
      * 
      * @type {string}
-     * @memberof UpdateJobDispatcher200Response
+     * @memberof UpdateJobAgent200Response
      */
     id: string;
     /**
      * 
      * @type {string}
-     * @memberof UpdateJobDispatcher200Response
+     * @memberof UpdateJobAgent200Response
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof UpdateJobDispatcher200Response
+     * @memberof UpdateJobAgent200Response
      */
     workspaceId: string;
 }
 
 /**
- * Check if a given object implements the UpdateJobDispatcher200Response interface.
+ * Check if a given object implements the UpdateJobAgent200Response interface.
  */
-export function instanceOfUpdateJobDispatcher200Response(value: object): value is UpdateJobDispatcher200Response {
+export function instanceOfUpdateJobAgent200Response(value: object): value is UpdateJobAgent200Response {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('workspaceId' in value) || value['workspaceId'] === undefined) return false;
     return true;
 }
 
-export function UpdateJobDispatcher200ResponseFromJSON(json: any): UpdateJobDispatcher200Response {
-    return UpdateJobDispatcher200ResponseFromJSONTyped(json, false);
+export function UpdateJobAgent200ResponseFromJSON(json: any): UpdateJobAgent200Response {
+    return UpdateJobAgent200ResponseFromJSONTyped(json, false);
 }
 
-export function UpdateJobDispatcher200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateJobDispatcher200Response {
+export function UpdateJobAgent200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateJobAgent200Response {
     if (json == null) {
         return json;
     }
@@ -65,7 +65,7 @@ export function UpdateJobDispatcher200ResponseFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function UpdateJobDispatcher200ResponseToJSON(value?: UpdateJobDispatcher200Response | null): any {
+export function UpdateJobAgent200ResponseToJSON(value?: UpdateJobAgent200Response | null): any {
     if (value == null) {
         return value;
     }

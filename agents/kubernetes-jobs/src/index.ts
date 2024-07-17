@@ -25,7 +25,7 @@ const deployManifest = async (
       await api.updateJobExecution({
         executionId: jobExecutionId,
         updateJobExecutionRequest: {
-          status: "invalid_job_dispatcher",
+          status: "invalid_job_agent",
           message: "Job name not found.",
         },
       });
@@ -39,23 +39,23 @@ const deployManifest = async (
       updateJobExecutionRequest: {
         status: "in_progress",
         externalRunId: `${namespace}/${name}`,
-        message: null,
+        message: "Job created.",
       },
     });
   } catch (e: any) {
-    console.log(e);
+    console.log("error from update job execution: ", e);
     await api.updateJobExecution({
       executionId: jobExecutionId,
       updateJobExecutionRequest: {
-        status: "invalid_job_dispatcher",
+        status: "invalid_job_agent",
         message: e.body.message,
       },
     });
   }
 };
 
-const spinUpNewJobs = async (dispatcherId: string) => {
-  const { jobExecutions = [] } = await api.getNextJobs({ dispatcherId });
+const spinUpNewJobs = async (agentId: string) => {
+  const { jobExecutions = [] } = await api.getNextJobs({ agentId });
   logger.info(`Found ${jobExecutions.length} jobExecution(s) to run.`);
   await Promise.allSettled(
     jobExecutions.map(async (jobExecution) => {
@@ -63,7 +63,7 @@ const spinUpNewJobs = async (dispatcherId: string) => {
       try {
         const je = await api.getJobExecution({ executionId: jobExecution.id });
         const manifest = renderManifest(
-          (jobExecution.jobDispatcherConfig as any).manifest,
+          (jobExecution.jobAgentConfig as any).manifest,
           je
         );
         const namespace = manifest?.metadata?.namespace ?? env.KUBE_NAMESPACE;
@@ -76,8 +76,8 @@ const spinUpNewJobs = async (dispatcherId: string) => {
   );
 };
 
-const updateExecutionStatus = async (dispatcherId: string) => {
-  const executions = await api.getDispatcherRunningExecutions({ dispatcherId });
+const updateExecutionStatus = async (agentId: string) => {
+  const executions = await api.getAgentRunningExecutions({ agentId });
   logger.info(`Found ${executions.length} running execution(s)`);
   await Promise.allSettled(
     executions.map(async (exec) => {
@@ -98,15 +98,15 @@ const updateExecutionStatus = async (dispatcherId: string) => {
 };
 
 const scan = async () => {
-  const { id } = await api.updateJobDispatcher({
+  const { id } = await api.updateJobAgent({
     workspace: env.CTRLPLANE_WORKSPACE,
-    updateJobDispatcherRequest: {
-      name: env.CTRLPLANE_DISPATCHER_NAME,
+    updateJobAgentRequest: {
+      name: env.CTRLPLANE_AGENT_NAME,
       type: "kubernetes-job",
     },
   });
 
-  logger.info(`Dispatcher ID: ${id}`);
+  logger.info(`Agent ID: ${id}`);
   await spinUpNewJobs(id);
   await updateExecutionStatus(id);
 };

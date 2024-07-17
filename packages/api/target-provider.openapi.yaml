@@ -3,10 +3,10 @@ info:
   title: Ctrlplane API
   version: 1.0.0
 paths:
-  /v1/{workspace}/job/dispatcher/name:
+  /v1/{workspace}/job/agent/name:
     patch:
-      summary: Upserts the dispatcher
-      operationId: updateJobDispatcher
+      summary: Upserts the agent
+      operationId: updateJobAgent
       parameters:
         - name: workspace
           in: path
@@ -30,7 +30,7 @@ paths:
                 - name
       responses:
         "200":
-          description: Successfully retrieved or created the dispatcher
+          description: Successfully retrieved or created the agent
           content:
             application/json:
               schema:
@@ -149,12 +149,12 @@ paths:
           description: Deployment target not found
         "500":
           description: Internal server error
-  /v1/job/dispatchers/{dispatcherId}/executions/running:
+  /v1/job/agents/{agentId}/executions/running:
     get:
-      summary: Get a running dispatchers execution
-      operationId: getDispatcherRunningExecutions
+      summary: Get a running agents execution
+      operationId: getAgentRunningExecutions
       parameters:
-        - name: dispatcherId
+        - name: agentId
           in: path
           required: true
           schema:
@@ -176,9 +176,9 @@ paths:
                       type: string
                     message:
                       type: string
-                    jobDispatcherId:
+                    jobAgentId:
                       type: string
-                    jobDispatcherConfig:
+                    jobAgentConfig:
                       type: object
                     externalRunId:
                       type: [string, "null"]
@@ -199,21 +199,21 @@ paths:
                     - id
                     - status
                     - message
-                    - jobDispatcherId
-                    - jobDispatcherConfig
+                    - jobAgentId
+                    - jobAgentConfig
                     - externalRunId
                     - config
-  /v1/job/dispatchers/{dispatcherId}/queue/next:
+  /v1/job/agents/{agentId}/queue/next:
     get:
       summary: Get the next jobs
       operationId: getNextJobs
       parameters:
-        - name: dispatcherId
+        - name: agentId
           in: path
           required: true
           schema:
             type: string
-          description: The dispatcher ID
+          description: The agent ID
       responses:
         "200":
           description: OK
@@ -232,9 +232,9 @@ paths:
                           description: The job ID
                         status:
                           type: string
-                        jobDispatcherId:
+                        jobAgentId:
                           type: string
-                        jobDispatcherConfig:
+                        jobAgentConfig:
                           type: object
                         message:
                           type: string
@@ -245,8 +245,8 @@ paths:
                         - status
                         - message
                         - jobConfigId
-                        - jobDispatcherId
-                        - jobDispatcherConfig
+                        - jobAgentId
+                        - jobAgentConfig
   /v1/job/executions/{executionId}:
     get:
       summary: Get a job execution
@@ -272,9 +272,9 @@ paths:
                     type: string
                   message:
                     type: string
-                  jobDispatcherId:
+                  jobAgentId:
                     type: string
-                  jobDispatcherConfig:
+                  jobAgentConfig:
                     type: object
                   externalRunId:
                     type: string
@@ -294,8 +294,8 @@ paths:
                   - id
                   - status
                   - message
-                  - jobDispatcherId
-                  - jobDispatcherConfig
+                  - jobAgentId
+                  - jobAgentConfig
                   - externalRunId
                   - config
     patch:
@@ -345,7 +345,7 @@ paths:
           required: true
           schema:
             type: string
-          description: The dispatcher ID
+          description: The agent ID
       responses:
         "200":
           description: OK
