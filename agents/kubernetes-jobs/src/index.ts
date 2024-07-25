@@ -112,4 +112,11 @@ const scan = async () => {
 };
 
 scan().catch(console.error);
-if (env.CRON_ENABLED) new CronJob(env.CRON_TIME, scan).start();
+if (env.CRON_ENABLED)
+  new CronJob(env.CRON_TIME, async () => {
+    try {
+      await scan();
+    } catch (e) {
+      logger.error(e);
+    }
+  }).start();
